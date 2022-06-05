@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --job-name=proteomablast
+#SBATCH --output=proteomablast.txt
+#SBATCH --partition=nu
+#SBATCH --ntasks=1
+#SBATCH --time=70:00:00
+#SBATCH --mail-user=curso-632@kabre.centa.ac.cr
+
+module load blast+/2.11.0
+
+makeblastdb -in a.chroococcum.faa -input_type fasta -dbtype prot -parse_seqids
+
+blastp -query d.acidovorans.faa -task blastp -db a.chroococcum.faa -out proteomablast.txt -evalue 1e-5 -outfmt '6' -num_threads 48
