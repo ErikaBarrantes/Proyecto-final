@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --job-name=genomablast
+#SBATCH --output=genomablast.txt
+#SBATCH --partition=nu
+#SBATCH --ntasks=1
+#SBATCH --time=70:00:00
+#SBATCH --mail-user=curso-632@kabre.centa.ac.cr
+
+module load blast+/2.11.0
+
+makeblastdb -in a.chroococcum.fna -input_type fasta -dbtype nucl -parse_seqids
+
+blastn -query d.acidovorans.fna -task blastn -db a.chroococcum.fna -out genomablast.txt -evalue 1e-5 -outfmt '6' -num_threads 48
